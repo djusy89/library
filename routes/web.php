@@ -20,5 +20,6 @@ Route::get('/', function () {
 Route::get('/books', 'BooksController@index');
 Route::post('/books', 'BooksController@store');
 Route::get('/books/{book}', 'BooksController@show');
-Route::get('/books/{editBook}/edit', 'BooksController@edit');
+Route::patch('/books/{book}', 'BooksController@edit');
+Route::delete('/books/{book}', 'BooksController@destroy');
 

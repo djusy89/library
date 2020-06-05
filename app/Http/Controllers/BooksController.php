@@ -19,21 +19,9 @@ class BooksController extends Controller
 
     public function store()
     {
-        $data = request()->validate([
-            'title' => 'required|min:5',
-            'author' => 'required',
-            'genre_id' => 'required',
-            'date_written' => 'required',
-            'publisher' => 'required',
-            'info' => 'required|min:5|max:250'
-        ]);
+        Book::create($this->validatedData());
 
-        if ($this->validate($data)) {
-            Book::create($data);
-            return redirect()->back();
-        } else {
-            redirect()-back()->withErrors(['error', 'message']);
-        }
+        return redirect()->back();
     }
 
     public function show(Book $book)
@@ -41,10 +29,30 @@ class BooksController extends Controller
         return view('book.show', compact('book'));
     }
 
-    public function edit(Book $editBook)
+    public function edit(Book $book)
     {
-        $genres = Genre::all();
+        $book->update($this->validatedData());
 
-        return view('book.edit-book-modal', compact('editBook', 'genres'));
+        return redirect('/books');
+
+    }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+
+        return redirect('/books');
+    }
+
+    protected function validatedData()
+    {
+        return request()->validate([
+            'title' => 'required|min:5',
+            'author' => 'required',
+            'genre_id' => 'required',
+            'date_written' => 'required',
+            'publisher' => 'required',
+            'info' => 'required|min:5|max:250'
+        ]);
     }
 }

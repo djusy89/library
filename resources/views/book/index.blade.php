@@ -37,17 +37,20 @@
             </thead>
             <tbody>
             @foreach($books as $book)
-                @include('book.edit-book-modal')
                 <tr>
                     <td><a href="/books/{{ $book->id }}">{{ $book->title }}</a></td>
                     <td>{{ $book->author }}</td>
                     <td>{{ $book->genre->name }}</td>
                     <td>{{ $book->date_written }}</td>
                     <td>{{ $book->publisher }}</td>
-                    <td><a href="/books/{{ $book->id }}" type="button" id="editModalButton" class="btn btn-success" data-toggle="modal" data-target="#myEditModal">
-                            Edit Book
-                        </a></td>
-                    <td><a href=""  name="id_book" class="btn btn-danger" value="{{ $book->id_book }}">Delete</a></td>
+                    <td>@include('book.edit-book-modal', [$book])</td>
+                    <td>
+                        <form action="/books/{{ $book->id }}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 <tr>
             @endforeach
             </tbody>
