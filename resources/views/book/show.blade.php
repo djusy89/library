@@ -1,10 +1,21 @@
-<h1>Book Details</h1>
+@extends('layouts.main')
+<div align="center">
+    <h1>Book Details</h1>
 
-<div>
-    <a href="/books">Back</a>
+    <div class="card" style="width: 30rem;">
+        <div class="card-header">
+            <h4 class="card-title">Title: {{ $book->title }}</h4>
+            <p class="card-text"><strong>About:</strong> <br>{{ $book->info }}</p>
+        </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Author: {{ $book->author }}</li>
+                <li class="list-group-item">Genre: {{ $book->genre->name }}</li>
+                <li class="list-group-item">Date written: {{ $book->date_written }}</li>
+                <li class="list-group-item">Publisher: {{ $book->publisher }}</li>
+            </ul>
+
+        <div class="card-body">
+            <a href="/books" class="btn btn-primary">Back</a>
+        </div>
+    </div>
 </div>
-
-<strong>Title</strong>
-<p>{{ $book->title }}</p>
-
-<stron>Author</stron>

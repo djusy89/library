@@ -22,4 +22,5 @@ Route::post('/books', 'BooksController@store');
 Route::get('/books/{book}', 'BooksController@show');
 Route::patch('/books/{book}', 'BooksController@edit');
 Route::delete('/books/{book}', 'BooksController@destroy');
+Route::get('/books', 'BooksController@search')->name('search');
 

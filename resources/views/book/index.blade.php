@@ -1,16 +1,17 @@
 @extends('layouts.main')
-
 @section('content')
     <nav class="navbar navbar-expand navbar-light bg-light">
-        <a href="index.php" class="navbar-brand">Books</a>
+        <a href="{{ \Illuminate\Support\Facades\URL::current() }}" class="navbar-brand">Books</a>
+        <a href="#" class="navbar-brand">Genre</a>
     </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-8 offset-2">
                 <h3 class="display-4">Search Books</h3>
-                <form action="searchBook.php" method="get">
+                <form action="/books" method="get">
+                    @csrf
                     <div class="input-group">
-                        <input type="text" name="search" class="form-control" placeholder="search">
+                        <input type="search" name="search" class="form-control" placeholder="Search book">
                         <div class="input-group-append">
                             <button type="submit" name="subBtn" class="btn btn-info">Search</button>
                         </div>
@@ -20,46 +21,49 @@
         </div>
     </div>
     @include('book.create-book-modal')
-    <br><br>
-    <div class="container">
-        <h2>BOOKS</h2><hr>
-        <table class="table table-striped js_books_table">
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Date written</th>
-                <th>Publisher</th>
-                <th>Edit Book</th>
-                <th>Delete Book</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($books as $book)
-                <tr>
-                    <td><a href="/books/{{ $book->id }}">{{ $book->title }}</a></td>
-                    <td>{{ $book->author }}</td>
-                    <td>{{ $book->genre->name }}</td>
-                    <td>{{ $book->date_written }}</td>
-                    <td>{{ $book->publisher }}</td>
-                    <td>@include('book.edit-book-modal', [$book])</td>
-                    <td>
-                        <form action="/books/{{ $book->id }}" method="post">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                <tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+    @include('book.search-result')
+{{--    <br><br>--}}
+{{--    <div class="container">--}}
+{{--        <h2>BOOKS</h2><hr>--}}
+{{--        <table class="table table-striped js_books_table">--}}
+{{--            <thead>--}}
+{{--            <tr>--}}
+{{--                <th>Title</th>--}}
+{{--                <th>Author</th>--}}
+{{--                <th>Genre</th>--}}
+{{--                <th>Date written</th>--}}
+{{--                <th>Publisher</th>--}}
+{{--                <th>Edit Book</th>--}}
+{{--                <th>Delete Book</th>--}}
+{{--            </tr>--}}
+{{--            </thead>--}}
+{{--            <tbody>--}}
+{{--            @foreach($books as $book)--}}
+{{--                <tr>--}}
+{{--                    <td><a href="/books/{{ $book->id }}">{{ $book->title }}</a></td>--}}
+{{--                    <td>{{ $book->author }}</td>--}}
+{{--                    <td>{{ $book->genre->name }}</td>--}}
+{{--                    <td>{{ $book->date_written }}</td>--}}
+{{--                    <td>{{ $book->publisher }}</td>--}}
+{{--                    <td>@include('book.edit-book-modal', [$book])</td>--}}
+{{--                    <td>--}}
+{{--                        <form action="/books/{{ $book->id }}" method="post">--}}
+{{--                            @method('DELETE')--}}
+{{--                            @csrf--}}
+{{--                            <button class="btn btn-danger">Delete</button>--}}
+{{--                        </form>--}}
+{{--                    </td>--}}
+{{--                <tr>--}}
+{{--            @endforeach--}}
+{{--            </tbody>--}}
+{{--        </table>--}}
+{{--    </div>--}}
 @endsection
-@if($errors->any())
-    <script>$("#myModal").modal("show")</script>
-@endif
+{{--@if(true)--}}
+{{--    <script type="text/javascript">--}}
+{{--        $('#myCreateModal').modal('show');--}}
+{{--    </script>--}}
+{{--@endif--}}
 
 {{--<script>--}}
 {{--    $('#submit').on('click',function(e){--}}

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\Genre;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;;
 
 class BooksController extends Controller
 {
@@ -52,7 +52,25 @@ class BooksController extends Controller
             'genre_id' => 'required',
             'date_written' => 'required',
             'publisher' => 'required',
-            'info' => 'required|min:5|max:250'
+            'info' => 'required|min:5|max:1250'
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+
+        $books = Book::with('genre')
+            ->where('title', 'LIKE', "%$search%")
+            ->orWhere('author', 'LIKE', "%$search%")
+            ->paginate(5);
+        $genres = Genre::all();
+        $book = new Book();
+
+        if (count($books) > 0)
+        {
+            return view('book.index', compact('books', 'genres', 'book'));
+        }
+        return view('book.index', compact('books', 'genres', 'book'))->with('message', 'No results found!!!');
     }
 }

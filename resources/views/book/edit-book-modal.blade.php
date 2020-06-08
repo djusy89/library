@@ -1,4 +1,4 @@
-<div class="container" align="center">
+<div class="container" align="left">
     <!-- Button to Open the Modal -->
     <button type="button" id="modalEditButton" class="btn btn-success" data-toggle="modal" data-target="#myEditModal{{ $book->id }}">
         Edit Book
